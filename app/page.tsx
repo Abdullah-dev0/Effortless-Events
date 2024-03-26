@@ -1,24 +1,15 @@
-"use client";
+import React from "react";
 
-import { useEffect, useState } from "react";
-export default function Home() {
-   const [state, setState] = useState(0);
-
-   useEffect(() => {
-      const sum = () => {
-         let a = 10;
-         let b = 20;
-         let c = a + b;
-         setState(c);
-      };
-
-      sum();
-   }, [state]);
+const HomePage = () => {
    return (
-      <>
-         <h1 className="text-4xl grid h-screen place-content-center bg-pink-700">
-            {state}
-         </h1>
-      </>
+      <div className="bg-emerald-600 grid place-content-center h-screen">
+         <h1 className="text-4xl">Effortless Events</h1>
+         <p>
+            Effortless Events is a full-service event planning Website that
+            specializes in creating unique and memorable events for our clients.
+         </p>
+      </div>
    );
-}
+};
+
+export default HomePage;
