@@ -1,30 +1,22 @@
 import mongoose from "mongoose";
 
-let cached = (global as any).mongoose || {
-   con: null,
-   promise: null,
-};
+const MONGODB_URI = process.env.MONGODB_URI;
+
+let cached = (global as any).mongoose || { conn: null, promise: null };
 
 export const connectToDatabase = async () => {
-   if (cached.con) {
-      return cached.con;
-   }
+   if (cached.conn) return cached.conn;
 
-   if (!cached.promise) {
-      if (!process.env.MONGODB_URI) {
-         throw new Error(
-            "Please define the MONGODB_URI environment variable inside .env.local"
-         );
-      }
-      cached.promise =
-         cached.promise ||
-         mongoose.connect(process.env.MONGODB_URI, {
-            dbName: "Effortless-Events",
-            bufferCommands: false,
-         });
-   }
+   if (!MONGODB_URI) throw new Error("MONGODB_URI is missing");
 
-   cached.con = await cached.promise;
+   cached.promise =
+      cached.promise ||
+      mongoose.connect(MONGODB_URI, {
+         dbName: "evently",
+         bufferCommands: false,
+      });
 
-   return cached.con;
+   cached.conn = await cached.promise;
+
+   return cached.conn;
 };
