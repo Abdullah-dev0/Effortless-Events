@@ -1,7 +1,7 @@
 "use server";
 
 import User from "@/lib/database/models/user.model";
-import { CreateUserParams } from "@/types";
+import { CreateUserParams, UpdateUserParams } from "@/types";
 import { revalidatePath } from "next/cache";
 import { connectToDatabase } from "../database";
 import Event from "../database/models/event.model";
@@ -31,15 +31,13 @@ const getUserByid = async (clerkId: string) => {
    }
 };
 
-const updateUser = async (clerkId: string, user: CreateUserParams) => {
+const updateUser = async (clerkId: string, user: UpdateUserParams) => {
    try {
       await connectToDatabase();
       const updatedUser = await User.findOneAndUpdate(
          { clerkId },
          {
             $set: {
-               clerkId: user.clerkId,
-               email: user.email,
                username: user.username,
                firstName: user.firstName,
                lastName: user.lastName,
