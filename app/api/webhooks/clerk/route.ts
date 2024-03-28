@@ -122,13 +122,9 @@ export async function POST(req: Request) {
 
       const deletedUser = await deleteUser(id!);
 
-      if (!deletedUser) {
-         return new Response("Error deleting user");
-      }
-
       return NextResponse.json({ message: "User Deleted" });
    }
-   
+
    console.log(`Webhook with and ID of ${id} and type of ${eventType}`);
    console.log("Webhook body:", body);
 
