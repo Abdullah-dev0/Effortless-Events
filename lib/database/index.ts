@@ -19,7 +19,7 @@ export const connectToDatabase = async () => {
       cached.promise =
          cached.promise ||
          mongoose.connect(process.env.MONGODB_URI, {
-            dbName: "Effortless Events",
+            dbName: "Effortless-Events",
             bufferCommands: false,
          });
    }

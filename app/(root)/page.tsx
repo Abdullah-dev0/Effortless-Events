@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
+import { connectToDatabase } from "@/lib/database";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Home() {
+export default async function Home() {
+   await connectToDatabase().then(() => console.log("Connected to database"));
    return (
       <>
          <section className="bg-primary-50 bg-dotted-pattern bg-contain py-5 w-full md:py-10">
