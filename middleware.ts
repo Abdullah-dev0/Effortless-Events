@@ -3,17 +3,13 @@ import { authMiddleware } from "@clerk/nextjs";
 // See https://clerk.com/docs/references/nextjs/auth-middleware
 // for more information about configuring your Middleware
 export default authMiddleware({
-   publicRoutes: [
-      "/",
-      "api/auth/webhook/stripe",
-      "api/uploadthing",
-      "api/webhook/clerk",
-   ],
+   publicRoutes: ["/", "api/auth/webhook/stripe", "api/uploadthing", "api/webhook/clerk"],
 
    ignoredRoutes: [
       "api/auth/webhook/stripe",
       "api/webhook/clerk",
       "api/uploadthing",
+      "api/webhook/clerk",
    ],
 });
 
