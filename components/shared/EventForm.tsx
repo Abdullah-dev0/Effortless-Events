@@ -6,8 +6,7 @@ import {
    FormControl,
    FormField,
    FormItem,
-   FormLabel,
-   FormMessage,
+   FormMessage
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { eventDefaultValues } from "@/constants";
@@ -15,6 +14,7 @@ import { eventFormSchema } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { Dropdown } from "./Dropdown";
 
 // types;
 
@@ -48,12 +48,27 @@ const EventForm = ({ userId, type }: EventFormProps) => {
                   control={form.control}
                   name="title"
                   render={({ field }) => (
-                     <FormItem>
+                     <FormItem className="w-full">
                         <FormControl>
                            <Input
-                              className="input-field"
                               placeholder="Event title"
                               {...field}
+                              className="input-field"
+                           />
+                        </FormControl>
+                        <FormMessage />
+                     </FormItem>
+                  )}
+               />
+               <FormField
+                  control={form.control}
+                  name="categoryId"
+                  render={({ field }) => (
+                     <FormItem className="w-full">
+                        <FormControl>
+                           <Dropdown
+                              onChangeHandler={field.onChange}
+                              value={field.value}
                            />
                         </FormControl>
                         <FormMessage />
