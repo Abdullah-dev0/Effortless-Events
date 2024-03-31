@@ -7,7 +7,7 @@ type EventFormProps = {
 };
 
 const EventForm = ({ userId, type }: EventFormProps) => {
-   return <div>EventForm</div>;
+   return <></>;
 };
 
 export default EventForm;
