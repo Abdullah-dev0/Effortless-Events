@@ -17,7 +17,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Dropdown } from "./Dropdown";
-import FileUploader from "./FileUploader";
+import { FileUploader } from "./FileUploader";
 
 // types;
 
@@ -99,7 +99,7 @@ const EventForm = ({ userId, type }: EventFormProps) => {
                />
                <FormField
                   control={form.control}
-                  name="description"
+                  name="imageUrl"
                   render={({ field }) => (
                      <FormItem className="w-full">
                         <FormControl>
