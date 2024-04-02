@@ -40,12 +40,11 @@ const EventForm = ({ userId, type }: EventFormProps) => {
 
    // 2. Define a submit handler.
    function onSubmit(values: z.infer<typeof eventFormSchema>) {
-    const formData = values;
+      const formData = values;
 
       // 3. Handle the file upload.
 
-      formData.imageUrl = file[0];
-      
+      // formData.imageUrl = file[0];
    }
 
    return (
