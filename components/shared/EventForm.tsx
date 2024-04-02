@@ -15,7 +15,6 @@ import { eventFormSchema } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { useState } from "react";
-// @disable-eslint
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useForm } from "react-hook-form";
@@ -41,9 +40,12 @@ const EventForm = ({ userId, type }: EventFormProps) => {
 
    // 2. Define a submit handler.
    function onSubmit(values: z.infer<typeof eventFormSchema>) {
-      // Do something with the form values.
-      // ✅ This will be type-safe and validated.
-      console.log(values);
+    const formData = values;
+
+      // 3. Handle the file upload.
+
+      formData.imageUrl = file[0];
+      
    }
 
    return (

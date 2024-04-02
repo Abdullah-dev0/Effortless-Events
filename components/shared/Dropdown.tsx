@@ -17,8 +17,12 @@ import {
    SelectTrigger,
    SelectValue,
 } from "@/components/ui/select";
+import {
+   createCategory,
+   getAllCategories,
+} from "@/lib/actions/category.action";
 import { ICategory } from "@/lib/database/models/category.model";
-import { startTransition, useState } from "react";
+import { startTransition, useEffect, useState } from "react";
 
 type DropdownProps = {
    onChangeHandler: () => void;
@@ -28,9 +32,22 @@ export const Dropdown = ({ onChangeHandler, value }: DropdownProps) => {
    const [categories, setCategory] = useState<ICategory[]>([]);
    const [newCategory, setNewCategory] = useState<string>("");
 
-   const handleAddCategory =  () => {
-      // Add new category to the database
+   const handleAddCategory = () => {
+      createCategory({
+         categoryName: newCategory.trim(),
+      }).then((category) => {
+         setCategory([...categories, category]);
+      });
    };
+
+   useEffect(() => {
+      const fetchCategories = async () => {
+         const categoriesList = await getAllCategories();
+         categoriesList && setCategory(categoriesList as ICategory[]);
+      };
+
+      fetchCategories();
+   }, []);
 
    return (
       <Select onValueChange={onChangeHandler} defaultValue={value}>
