@@ -15,6 +15,7 @@ import { eventFormSchema } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { useState } from "react";
+// @disable-eslint
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useForm } from "react-hook-form";
