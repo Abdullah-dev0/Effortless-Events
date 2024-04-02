@@ -16,11 +16,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Dropdown } from "./Dropdown";
 import { FileUploader } from "./FileUploader";
-import "react-datepicker/dist/react-datepicker.css";
 
 // types;
 
