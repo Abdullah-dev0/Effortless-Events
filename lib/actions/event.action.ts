@@ -1,6 +1,6 @@
 "use server";
 
-import { CreateEventParams } from "@/types";
+import { CreateEventParams, UpdateEventParams } from "@/types";
 import { revalidatePath } from "next/cache";
 import { connectToDatabase } from "../database";
 import Event from "../database/models/event.model";
@@ -30,6 +30,46 @@ export const createEvent = async ({
       revalidatePath(path);
 
       return JSON.parse(JSON.stringify(newEvent));
+   } catch (error) {
+      console.log(error);
+      handleError(error);
+   }
+};
+
+export const updateEvent = async ({
+   userId,
+   event,
+   path,
+}: UpdateEventParams) => {
+   try {
+      await connectToDatabase();
+
+      const updatedEvent = await Event.findByIdAndUpdate(
+         userId,
+         {
+            $set: {
+               title: event.title,
+               imageUrl: event.imageUrl,
+               description: event.description,
+               location: event.location,
+               startDateTime: event.startDateTime,
+               endDateTime: event.endDateTime,
+               category: event.categoryId,
+               price: event.price,
+               isFree: event.isFree,
+               url: event.url,
+            },
+         },
+         {
+            new: true,
+         }
+      );
+
+      if (!updatedEvent) throw new Error("Error in updating event");
+
+      revalidatePath(path);
+
+      return JSON.parse(JSON.stringify(updatedEvent));
    } catch (error) {
       console.log(error);
       handleError(error);
