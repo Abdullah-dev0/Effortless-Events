@@ -36,34 +36,38 @@ export const createEvent = async ({
    }
 };
 
-export const updateEvent = async ({
-   userId,
-   event,
-   path,
-}: UpdateEventParams) => {
-   try {
-      await connectToDatabase();
 
-      const updatedEvent = await Event.findByIdAndUpdate(
-         userId,
-         {
-            $set: {
-               ...event,
-               category: event.categoryId,
-            },
-         },
-         {
-            new: true,
-         }
-      );
+//not working yet
 
-      if (!updatedEvent) throw new Error("Error in updating event");
 
-      revalidatePath(path);
+// export const updateEvent = async ({
+//    userId,
+//    event,
+//    path,
+// }: UpdateEventParams) => {
+//    try {
+//       await connectToDatabase();
 
-      return JSON.parse(JSON.stringify(updatedEvent));
-   } catch (error) {
-      console.log(error);
-      handleError(error);
-   }
-};
+//       const updatedEvent = await Event.findByIdAndUpdate(
+//          userId,
+//          {
+//             $set: {
+//                ...event,
+//                category: event.categoryId,
+//             },
+//          },
+//          {
+//             new: true,
+//          }
+//       );
+
+//       if (!updatedEvent) throw new Error("Error in updating event");
+
+//       revalidatePath(path);
+
+//       return JSON.parse(JSON.stringify(updatedEvent));
+//    } catch (error) {
+//       console.log(error);
+//       handleError(error);
+//    }
+// };
