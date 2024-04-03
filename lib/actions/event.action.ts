@@ -48,16 +48,8 @@ export const updateEvent = async ({
          userId,
          {
             $set: {
-               title: event.title,
-               imageUrl: event.imageUrl,
-               description: event.description,
-               location: event.location,
-               startDateTime: event.startDateTime,
-               endDateTime: event.endDateTime,
+               ...event,
                category: event.categoryId,
-               price: event.price,
-               isFree: event.isFree,
-               url: event.url,
             },
          },
          {
