@@ -20,7 +20,7 @@ import {
 import {
    createCategory,
    getAllCategories,
-} from "@/lib/actions/category.action";
+} from "@/lib/actions/category.actions";
 import { ICategory } from "@/lib/database/models/category.model";
 import { startTransition, useEffect, useState } from "react";
 

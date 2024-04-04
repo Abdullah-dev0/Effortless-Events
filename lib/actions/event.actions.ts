@@ -1,11 +1,22 @@
 "use server";
 
-import { CreateEventParams, UpdateEventParams } from "@/types";
 import { revalidatePath } from "next/cache";
+import { CreateEventParams } from "../../types";
 import { connectToDatabase } from "../database";
+import Category from "../database/models/category.model";
 import Event from "../database/models/event.model";
 import User from "../database/models/user.model";
 import { handleError } from "../utils";
+
+const populateEvent = (query: any) => {
+   return query
+      .populate({
+         path: "organizer",
+         model: User,
+         select: "_id firstName lastName",
+      })
+      .populate({ path: "category", model: Category, select: "_id name" });
+};
 
 export const createEvent = async ({
    event,
@@ -36,38 +47,15 @@ export const createEvent = async ({
    }
 };
 
+export const getEventById = async (id: string) => {
+   try {
+      await connectToDatabase();
 
-//not working yet
+      const event = await populateEvent(Event.findById(id));
+      if (!event) throw new Error("Event not found");
 
-
-// export const updateEvent = async ({
-//    userId,
-//    event,
-//    path,
-// }: UpdateEventParams) => {
-//    try {
-//       await connectToDatabase();
-
-//       const updatedEvent = await Event.findByIdAndUpdate(
-//          userId,
-//          {
-//             $set: {
-//                ...event,
-//                category: event.categoryId,
-//             },
-//          },
-//          {
-//             new: true,
-//          }
-//       );
-
-//       if (!updatedEvent) throw new Error("Error in updating event");
-
-//       revalidatePath(path);
-
-//       return JSON.parse(JSON.stringify(updatedEvent));
-//    } catch (error) {
-//       console.log(error);
-//       handleError(error);
-//    }
-// };
+      return JSON.parse(JSON.stringify(event));
+   } catch (error) {
+      console.log("Error in getevntbyid", error);
+   }
+};
