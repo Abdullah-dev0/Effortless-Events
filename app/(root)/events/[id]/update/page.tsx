@@ -1,12 +1,18 @@
 import EventForm from "@/components/shared/EventForm";
+import { getEventById } from "@/lib/actions/event.actions";
 import { auth } from "@clerk/nextjs";
 
-const UpdateForm = () => {
+type UpdateEventProps = {
+   params: {
+      id: string;
+   };
+};
+
+const UpdateEvent = async ({ params: { id } }: UpdateEventProps) => {
    const { sessionClaims } = auth();
 
-   //we set the cookies and add the userId init to the sessionClaims
-
    const userId = sessionClaims?.userId as string;
+   const event = await getEventById(id);
 
    return (
       <>
@@ -17,10 +23,15 @@ const UpdateForm = () => {
          </section>
 
          <div className="wrapper my-8">
-            <EventForm userId={userId} type="Update" />
+            <EventForm
+               type="Update"
+               //  event={event}
+               //  eventId={event._id}
+               userId={userId}
+            />
          </div>
       </>
    );
 };
 
-export default UpdateForm;
+export default UpdateEvent;
