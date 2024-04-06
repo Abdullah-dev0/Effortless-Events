@@ -75,6 +75,9 @@ const EventForm = ({ userId, type }: EventFormProps) => {
             handleError(error);
          }
       }
+      if(type === "Update") {
+         // Update Event
+      }
    }
 
    return (
