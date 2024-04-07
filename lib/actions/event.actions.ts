@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import {
    CreateEventParams,
    GetAllEventsParams,
+   GetRelatedEventsByCategoryParams,
    UpdateEventParams,
 } from "../../types";
 import { connectToDatabase } from "../database";
