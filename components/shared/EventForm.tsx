@@ -11,7 +11,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { eventDefaultValues } from "@/constants";
-import { createEvent } from "@/lib/actions/event.actions";
+import { createEvent, updateEvent } from "@/lib/actions/event.actions";
+import { IEvent } from "@/lib/database/models/event.model";
 import { useUploadThing } from "@/lib/uploadthing";
 import { handleError } from "@/lib/utils";
 import { eventFormSchema } from "@/lib/validation";
@@ -32,16 +33,26 @@ import { FileUploader } from "./FileUploader";
 type EventFormProps = {
    userId: string;
    type: "Create" | "Update";
+   event?: IEvent;
+   eventId?: string;
 };
 
-const EventForm = ({ userId, type }: EventFormProps) => {
+const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
    const [files, setFile] = useState<File[]>([]);
    const initialValues = eventDefaultValues;
    const { startUpload } = useUploadThing("imageUploader");
    const router = useRouter();
    const form = useForm<z.infer<typeof eventFormSchema>>({
       resolver: zodResolver(eventFormSchema),
-      defaultValues: initialValues,
+      defaultValues:
+         event && type === "Update"
+            ? {
+                 ...event,
+                 categoryId: event.category._id,
+                 startDateTime: new Date(event.startDateTime),
+                 endDateTime: new Date(event.endDateTime),
+              }
+            : initialValues,
    });
 
    // 2. Define a submit handler.
@@ -75,8 +86,29 @@ const EventForm = ({ userId, type }: EventFormProps) => {
             handleError(error);
          }
       }
-      if(type === "Update") {
-         // Update Event
+      if (type === "Update") {
+         if (!eventId) {
+            router.back();
+            return;
+         }
+         try {
+            const updatedEvent = await updateEvent({
+               userId,
+               event: {
+                  ...values,
+                  imageUrl: uploadedImageUrl,
+                  _id: eventId,
+               },
+               path: `/events/${eventId}`,
+            });
+
+            if (updatedEvent) {
+               form.reset();
+               router.push(`/events/${updatedEvent._id}`);
+            }
+         } catch (error) {
+            handleError(error);
+         }
       }
    }
 
