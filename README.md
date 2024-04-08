@@ -1,7 +1,7 @@
 <div align="center">
   <br />
-    <a href="https://youtu.be/zgGhzuBZOQg" target="_blank">
-      <img src="https://github.com/adrianhajdin/event_platform/assets/151519281/548975af-f0ed-4103-8834-fe93cf91862e" alt="Project Banner">
+    <a href="https://effortless-events.vercel.app/" target="_blank">
+![image](https://github.com/Abdullah-dev0/Effortless-Events/assets/116773738/1eb58229-f31b-4216-8ec3-556f003106eb)
     </a>
   <br />
 
