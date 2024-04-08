@@ -65,10 +65,7 @@ export const createOrder = async (order: CreateOrderParams) => {
 };
 
 // GET ORDERS BY EVENT
-export async function getOrdersByEvent({
-   searchString,
-   eventId,
-}: GetOrdersByEventParams) {
+export async function getOrdersByEvent({ eventId }: GetOrdersByEventParams) {
    try {
       await connectToDatabase();
 
@@ -77,15 +74,17 @@ export async function getOrdersByEvent({
 
       const orders = await Order.aggregate([
          {
+            $match: {
+               event: eventObjectId,
+            },
+         },
+         {
             $lookup: {
                from: "users",
                localField: "buyer",
                foreignField: "_id",
                as: "buyer",
             },
-         },
-         {
-            $unwind: "$buyer",
          },
          {
             $lookup: {
@@ -96,26 +95,23 @@ export async function getOrdersByEvent({
             },
          },
          {
-            $unwind: "$event",
-         },
-         {
-            $project: {
-               _id: 1,
-               totalAmount: 1,
-               createdAt: 1,
-               eventTitle: "$event.title",
-               eventId: "$event._id",
+            $addFields: {
                buyer: {
-                  $concat: ["$buyer.firstName", " ", "$buyer.lastName"],
+                  $arrayElemAt: ["$buyer", 0],
+               },
+               event: {
+                  $arrayElemAt: ["$event", 0],
                },
             },
          },
          {
-            $match: {
-               $and: [
-                  { eventId: eventObjectId },
-                  { buyer: { $regex: RegExp(searchString, "i") } },
-               ],
+            $project: {
+               _id: 1,
+               eventTitle: "$event.title",
+               firstName: "$buyer.firstName",
+               buyer: "$buyer.username",
+               totalAmount: "$event.price",
+               createdAt: "$event.createdAt",
             },
          },
       ]);

@@ -13,6 +13,7 @@ type CardProps = {
 
 const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
    const { sessionClaims } = auth();
+   
    const userId = sessionClaims?.userId as string;
 
    const isEventCreator = userId === event.organizer._id.toString();
@@ -24,7 +25,6 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
             style={{ backgroundImage: `url(${event.imageUrl})` }}
             className="flex-center flex-grow bg-gray-50 bg-cover bg-center text-grey-500"
          />
-         
 
          {isEventCreator && !hidePrice && (
             <div className="absolute right-2 top-2 flex flex-col gap-4 rounded-xl bg-white p-3 shadow-sm transition-all">
