@@ -1,7 +1,7 @@
 <div align="center">
   <br />
     <a href="https://effortless-events.vercel.app/" target="_blank">
-![image](https://github.com/Abdullah-dev0/Effortless-Events/assets/116773738/1eb58229-f31b-4216-8ec3-556f003106eb)
+<img src="https://github.com/Abdullah-dev0/Effortless-Events/assets/116773738/1eb58229-f31b-4216-8ec3-556f003106eb" alt="nect.js" />
     </a>
   <br />
 
