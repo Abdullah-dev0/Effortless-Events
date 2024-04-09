@@ -1,6 +1,7 @@
+import { ClerkProvider } from "@clerk/nextjs";
+import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
-import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -23,7 +24,10 @@ export default function RootLayout({
    return (
       <ClerkProvider>
          <html lang="en">
-            <body className={poppins.className}>{children}</body>
+            <body className={poppins.className}>
+               {children}
+               <Analytics />
+            </body>
          </html>
       </ClerkProvider>
    );

@@ -21,6 +21,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@stripe/stripe-js": "^3.2.0",
     "@uploadthing/react": "^6.4.1",
+    "@vercel/analytics": "^1.2.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "date-fns": "^3.6.0",
